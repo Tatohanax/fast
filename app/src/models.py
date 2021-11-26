@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 
+
 class PyObjectId(ObjectId):
     @classmethod
     def __get_validators__(cls):
@@ -20,73 +21,23 @@ class PyObjectId(ObjectId):
 
 
 class UserModel(BaseModel):
-    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    first_name: str
-    last_name: str
-    role : str
-    is_active : str
-    created_at: Optional[str] = None
-    last_login: str
-    password: str
-
-    class Config:
-        allow_population_by_field_name = True
-        arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str}
-        schema_extra = {
-            "example": {
-                "first_name": "John",
-                "last_name": "Doe",
-                "role": "simple mortal",
-                "is_active": "false",
-                "created_at": "datetime",
-                "last_login": "datetime",
-                "password": "fakehashedsecret",
-            }
-        }
-
-
-class UpdateUserModel(BaseModel):
-    first_name: Optional[str]
-    last_name: Optional[str]
-    role: Optional[str]
-    is_active: Optional[str]
-    created_at: Optional[str]
-    last_login: Optional[str]
-
-    class Config:
-        arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str}
-        schema_extra = {
-            "example": {
-                "first_name": "John",
-                "last_name": "Doe",
-                "role": "simple mortal",
-                "is_active": "false",
-                "created_at": "datetime",
-                "last_login": "datetime",
-            }
-        }
+    name: str
+    email : str
+    age : int
+    company : str
+    join_date: str
+    job_title: str
+    gender: str
+    salary: int
 
 
 class ShowUserModel(BaseModel):
-    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    first_name: Optional[str]
-    last_name: Optional[str]
-    role: Optional[str]
-    is_active: Optional[str]
-    created_at: Optional[str]
-    last_login: Optional[str]
+    name: str
+    email : str
+    age : int
+    company : str
+    join_date: str
+    job_title: str
+    gender: str
+    salary: int
 
-    class Config:
-        arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str}
-        schema_extra = {
-            "example": {
-                "first_name": "John",
-                "last_name": "Doe",
-                "role": "simple mortal",
-                "created_at": "datetime",
-                "last_login": "datetime",
-            }
-        }

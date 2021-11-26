@@ -6,14 +6,20 @@ services:
         ports: 
             - 80:80
         environment:
-            - DB_URL=mongodb://db/myTestDB
+            - DB_URL=mongodb://root_test:example_test@db:27017
         volumes:
             - ./app:/app
     db:
         image: mongo
         ports:
             - 27017:27017
+ 
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root_test
+            MONGO_INITDB_ROOT_PASSWORD: example_test
+            MONGO_INITDB_DATABASE: admin
+
         volumes:
-            - taskdb:/data/db
+            -  ./db_mongo:/data/db
 volumes:
     taskdb:
