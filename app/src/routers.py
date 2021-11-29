@@ -1,16 +1,14 @@
 from fastapi import (
-    APIRouter
+    APIRouter,
+    HTTPException
 )
 from .models import (
    # UserModel,
     ShowUserModel
 )
-from .settings import db, ACCESS_TOKEN_EXPIRE_MINUTES
+from .settings import db
 
 from typing import List
-from datetime import datetime, timedelta
-
-import re
 
 router = APIRouter()
 """
@@ -24,5 +22,8 @@ async def create_user(user: UserModel):
 
 @router.get("/list", response_description="List all users", response_model=List[ShowUserModel])
 async def list_users():
-    users = await db["users"].find().to_list(1000)
+    try:
+        users = await db["users"].find({ "age": { "$gte": 18, "$lte": 30 } }).to_list(100)
+    except:
+         raise HTTPException(status_code=404, detail=f"Not found")
     return users
